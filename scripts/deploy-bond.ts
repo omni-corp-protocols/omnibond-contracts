@@ -1,5 +1,5 @@
 import hre from "hardhat";
-import { writeFileSync } from "fs";
+import { writeFileSync, readFileSync } from "fs";
 import { numToWei } from "../utils/ethUnitParser";
 
 const outputFilePath = `./deployments/${hre.network.name}.json`;
@@ -16,21 +16,13 @@ async function main() {
   await bond.deployed();
   console.log("Bond deployed to:", bond.address);
 
-  const output = {
-    Bond: bond.address,
-  };
+  let output = JSON.parse(readFileSync(outputFilePath, 'utf-8'));
+  output.Bond = bond.address;
   writeFileSync(outputFilePath, JSON.stringify(output, null, 2));
 
   console.log("updating price");
   await bond.updatePrice({
     gasLimit: 100000,
-  });
-  const busdI = await hre.ethers.getContractAt("IERC20", busd);
-  console.log("approving busd");
-  await busdI.approve(bond.address, hre.ethers.constants.MaxUint256);
-  console.log("bond.deposit");
-  await bond.deposit(numToWei("1", "18"), {
-    gasLimit: 500000,
   });
 }
 
