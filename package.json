@@ -2,7 +2,7 @@
   "name": "peg-lottery-contracts",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/omni-corp-protocols/abc.git",
+  "repository": "https://github.com/omni-corp-protocols/omnibond-contracts",
   "author": "Omni Consumer Protocols",
   "license": "MIT",
   "scripts": {
